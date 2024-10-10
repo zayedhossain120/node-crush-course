@@ -65,6 +65,23 @@ const createUserHandler = (req, res) => {
   });
 };
 
+//delete handler
+const deleteUserHandler = (req, res) => {
+  const id = req.url.split("/")[3];
+  const user = users.filter((user) => user.id !== parseInt(id));
+  if (user) {
+    res.write(JSON.stringify(user));
+  } else {
+    res.statusCode = 400;
+    res.write(
+      JSON.stringify({
+        message: "User not found",
+      })
+    );
+  }
+  res.end();
+};
+
 // Create the server
 const server = createServer((req, res) => {
   // Use the logger middleware first
@@ -81,6 +98,11 @@ const server = createServer((req, res) => {
         getUserByIdHandler(req, res);
       } else if (req.url === "/api/users" && req.method === "POST") {
         createUserHandler(req, res);
+      } else if (
+        req.url.match(/\/api\/users\/([0-9]+)/) &&
+        req.method === "DELETE"
+      ) {
+        deleteUserHandler(req, res);
       } else {
         notFoundHandler(req, res);
       }

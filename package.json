@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --env-file=.env server2.js"
+    "dev": "nodemon --env-file=.env server.js"
   },
   "author": "Zayed Hossain",
   "license": "ISC",
